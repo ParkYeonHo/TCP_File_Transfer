@@ -5,5 +5,5 @@
 * parallel processing client's request using thread
 
 개발 환경  
-*gcc : 5.4.0  
-*vi : 7.4.1689
+* gcc : 5.4.0  
+* vi : 7.4.1689
