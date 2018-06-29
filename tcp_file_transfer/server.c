@@ -29,20 +29,19 @@ file_send (void *vargp)
 
   FILE *p;
 
-  read (*ns, filename, BUFSIZE);	//read  file name from client
+  read (*ns, filename, BUFSIZE);    //read  file name from client
 
   if (p = fopen (filename, "r"))
     {
 
-      fseek (p, 0, SEEK_END);	// move to end of file
-      file_size = ftell (p);	// calculate file size
+      fseek (p, 0, SEEK_END);   // move to end of file
+      file_size = ftell (p);    // calculate file size
       buffer = malloc (file_size + 1);
       memset (buffer, 0, file_size + 1);
-      fseek (p, 0, SEEK_SET);	// move to beginning of the file
+      fseek (p, 0, SEEK_SET);   // move to beginning of the file
       fread (buffer, file_size, 1, p);
     }
-
-  send (*ns, buffer, file_size, 0);	// transfer file to clients
+  send (*ns, buffer, file_size, 0); // transfer file to clients
 
 
   close (*ns);
@@ -62,11 +61,6 @@ main (int argc, char *argv[])
   int sd, clientlen = sizeof (cli);
   pthread_t tid;
   int *ns;
-
-  getcwd (path, 1024);
-  strcat (path, argv[2]);
-  chdir (path);			// change directory 
-
 
   if ((sd = socket (AF_INET, SOCK_STREAM, 0)) == -1)
     {
@@ -92,18 +86,18 @@ main (int argc, char *argv[])
       exit (1);
     }
 
-
-  while (1)			// accpet client request 
+  while (1)         // accpet client request 
     {
-
-      ns = (int *) malloc (sizeof (int));	// ns : socket descriptor
-      if ((*ns = accept (sd, (struct sockaddr *) &cli, &clientlen)) == -1)	// accept client request
-	{
-	  perror ("accept");
-	  exit (1);
-	}
-
-      pthread_create (&tid, NULL, file_send, ns);	// make a new thread to process client request
+    
+      ns = (int *) malloc (sizeof (int));   // ns : socket descriptor
+      if ((*ns = accept (sd, (struct sockaddr *) &cli, &clientlen)) == -1)  // accept client request
+    {
+      perror ("accept");
+      exit (1);
+    } 
+    
+      pthread_create (&tid, NULL, file_send, ns);   // make a new thread to process client request
     }
   return 0;
-}
+} 
+                  
