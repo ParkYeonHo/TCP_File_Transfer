@@ -1,1 +1,3 @@
-# unix_system_programming
+```
+server : ./server <port>   
+client : ./client <port> <ip> <file>
