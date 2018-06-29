@@ -23,12 +23,12 @@ main (int argc, char *argv[])
   int fd;
   int len;
 
-  fd = open (argv[3], O_WRONLY | O_CREAT, 0666); // open file using descriptor 
- 
-  memset ((char *) &sin, '\0', sizeof (sin));       
+  fd = open (argv[3], O_WRONLY | O_CREAT, 0666);    // open file using descriptor 
+
+  memset ((char *) &sin, '\0', sizeof (sin));
   sin.sin_family = AF_INET;
-  sin.sin_port = htons (atoi (argv[1]));           // connect port
-  sin.sin_addr.s_addr = inet_addr (argv[2]); //serer ip
+  sin.sin_port = htons (atoi (argv[1]));    // connect port
+  sin.sin_addr.s_addr = inet_addr (argv[2]);    //serer ip
 
   if ((sd = socket (AF_INET, SOCK_STREAM, 0)) == 1)
     {
@@ -42,17 +42,17 @@ main (int argc, char *argv[])
       perror ("connect");
       exit (1);
     }
+               
+strcpy (buf, argv[3]);    // copy file name to buf
 
-   strcpy (buf,argv[3]);                 // copy file name to buf
-
-   write(sd, buf,sizeof(buf));           // send filename which client want to
+  write (sd, buf, sizeof (buf));    // send filename which client want to
 
 
 
-  while ((len = recv (sd, buf1, sizeof (buf1), 0)) != 0) // receive file data from server
+  while ((len = recv (sd, buf1, sizeof (buf1), 0)) != 0)    // receive file data from server
     {
-      write (fd, buf1, len);               // write data to file
-    } 
+      write (fd, buf1, len);    // write data to file
+    }
 
 
 
@@ -60,3 +60,5 @@ main (int argc, char *argv[])
   close (sd);
   return 0;
 }
+
+ 
